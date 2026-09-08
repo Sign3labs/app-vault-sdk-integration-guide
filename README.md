@@ -140,15 +140,3 @@ import com.sign3.appvault.IgnoreAppVault
 @IgnoreAppVault
 class CryptoCore { /* ... */ }
 ```
-
----
-
-## Step 5 — R8 / ProGuard
-
-app-vault generates a small decrypt **dispatcher** class in **your module's namespace**
-(e.g. `com.your.app.package.StringFog`) that must survive shrinking. Add this to your `proguard-rules.pro`
-(release builds with `minifyEnabled true`):
-
-```proguard
--keep class com.your.app.package.StringFog { *; }
-```
