@@ -1,6 +1,6 @@
-# app-vault — Integration Guide for Android
+# App-Vault — Integration Guide for Android
 
-**app-vault** is a compile-time **string-obfuscation** library for Android, offered by **Sign3**. It
+**App Vault** is a compile-time **String obfuscation** library for Android, offered by **Sign3**. It
 encrypts the string constants in your code at build time and transparently decrypts them at runtime, so
 sensitive literals — endpoints, keys, file paths, detection signatures — are not readable with a plain
 `strings`/grep of the APK. You integrate through app-vault's own Gradle DSL, interface, and annotation.
@@ -9,7 +9,7 @@ sensitive literals — endpoints, keys, file paths, detection signatures — are
 
 ## Step 1 — Configure the repository
 
-app-vault is published to Sign3's JFrog Artifactory. Add the repository so both the **plugin classpath**
+App Vault is published to Sign3's JFrog Artifactory. Add the repository so both the **plugin classpath**
 and the **runtime dependency** can be resolved. Collect the username/password from the credentials
 document.
 
@@ -65,7 +65,6 @@ plugins {
 apply plugin: 'appvault'
 
 import com.sign3.appvault.AppVaultMode
-
 appvault {
     implementation 'com.sign3.appvault.AppVaultCipher'   // default IAppVault cipher
     enable true
@@ -117,18 +116,17 @@ new Thread(AppVaultCipher::warmUp).start();
 
 ---
 
-## Step 4 — Exclude classes that must not be obfuscated (`@IgnoreAppVault`)
+## Optional — To Exclude classes that are not sensitive to the Application (`@IgnoreAppVault`)
 
-Some classes must keep their string constants **plaintext** — most importantly anything that runs *before*
-or *underneath* the obfuscation layer (e.g. your crypto core, which otherwise would need the decryptor in
-order to decrypt its own key material). Annotate such a class with `@IgnoreAppVault`:
+If you want certain classes to keep their string constants in plaintext, especially when those strings are not sensitive to the application, you can annotate the class with `@IgnoreAppVault`.
+
 
 **Java**
 ```java
 import com.sign3.appvault.IgnoreAppVault;
 
 @IgnoreAppVault
-public final class CryptoCore {
+public final class SomeClass {
     // string literals here stay as-is
 }
 ```
@@ -138,5 +136,7 @@ public final class CryptoCore {
 import com.sign3.appvault.IgnoreAppVault
 
 @IgnoreAppVault
-class CryptoCore { /* ... */ }
+class SomeClass { 
+     // string literals here stay as-is
+}
 ```
