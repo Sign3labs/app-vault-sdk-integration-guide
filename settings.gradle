@@ -1,0 +1,29 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }   // StringFog engine lives on jitpack (transitive)
+    }
+}
+def creds = new Properties()
+new File(settings.rootDir, "credentials.properties").withInputStream { creds.load(it) }
+dependencyResolutionManagement {
+    // Same strict mode a real consumer uses: modules may NOT declare their own repositories.
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }   // stringfog:interface (transitive dep of app-vault)
+        // app-vault is consumed like any normal published library -- straight from JFrog. No mavenLocal.
+        maven {
+            url "https://sign3.jfrog.io/artifactory/intelligence-generic-local/"
+            credentials {
+                username = creds.getProperty("jfrog.username")
+                password = creds.getProperty("jfrog.password")
+            }
+        }
+    }
+}
+rootProject.name = "app-vault-integration"
+include ':app'

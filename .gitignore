@@ -1,0 +1,23 @@
+credentials.properties
+local.properties
+.gradle/
+build/
+.idea/
+*.iml
+
+# Credentials / SDK-sensitive
+*.jks
+*.keystore
+keystore.properties
+secrets.properties
+.env
+*.pem
+# Keep the template
+!credentials.properties.example
+
+# Misc
+.DS_Store
+.kotlin/
+*.apk
+*.aab
+captures/
