@@ -72,6 +72,11 @@ appvault {
     mode AppVaultMode.base64
 }
 
+ext {
+    CLIENT_ID = "<SIGN3_CLIENT_ID>"
+    CLIENT_SECRET = "<SIGN3_CLIENT_SECRET>"
+}
+
 dependencies {
     // Needed at RUNTIME to decrypt; ships in your APK.
     implementation 'com.sign3.app-vault:app-vault:1.0.0'
@@ -79,6 +84,15 @@ dependencies {
 ```
 
 Sync your project with Gradle after adding this.
+
+### Client credentials (`ext { }`)
+
+Replace `<SIGN3_CLIENT_ID>` and `<SIGN3_CLIENT_SECRET>` with the client ID and client secret from the
+credentials document. Both are **mandatory**: app-vault uses them at build time to derive the encryption key
+and, on **Generate Signed Build**, to verify that App Vault is enabled for your client. If either value is
+missing the build fails with `CLIENT_ID and CLIENT_SECRET must be defined in the app level build.gradle`; if
+App Vault is not enabled for your client, the signed build fails with
+`App Vault not subscribed, please contact Sign3 team`.
 
 ### `appvault { }` options
 
