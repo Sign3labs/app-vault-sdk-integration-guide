@@ -72,6 +72,11 @@ appvault {
     mode AppVaultMode.base64
 }
 
+ext {
+    CLIENT_ID = "<SIGN3_CLIENT_ID>"
+    CLIENT_SECRET = "<SIGN3_CLIENT_SECRET>"
+}
+
 dependencies {
     // Needed at RUNTIME to decrypt; ships in your APK.
     implementation 'com.sign3.app-vault:app-vault:1.0.0'
